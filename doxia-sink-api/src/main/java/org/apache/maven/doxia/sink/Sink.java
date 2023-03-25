@@ -18,6 +18,8 @@
  */
 package org.apache.maven.doxia.sink;
 
+import java.io.AutoCloseable;
+
 /**
  * A <i>Sink</i> consumes Doxia events to produce a resultant output format
  * (eg Docbook, PDF, XHTML...).
@@ -44,7 +46,7 @@ package org.apache.maven.doxia.sink;
  *   Those can then be fed into an arbitrary Sink to produce any desired final output.
  * </p>
  * <p>
- * <b>Note</b>: All implemented sink <b>should</b> use UTF-8 as encoding.
+ * <b>Note</b>: All implemented sinks <b>should</b> use UTF-8 as encoding.
  * </p>
  *
  * @since 1.0-alpha-6
@@ -52,7 +54,7 @@ package org.apache.maven.doxia.sink;
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @author ltheussl
  */
-public interface Sink {
+public interface Sink implements AutoCloseable {
 
     /**
      * A numbering to handle a number list.

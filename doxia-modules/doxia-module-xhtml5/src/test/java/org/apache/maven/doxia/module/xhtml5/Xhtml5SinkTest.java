@@ -53,10 +53,8 @@ public class Xhtml5SinkTest extends AbstractSinkTest {
      */
     @Test
     public void testLinks() {
-        Xhtml5Sink sink = null;
         Writer writer = new StringWriter();
-        try {
-            sink = (Xhtml5Sink) createSink(writer);
+        try (Xhtml5Sink sink = (Xhtml5Sink) createSink(writer)) {
             sink.link("http:/www.xdoc.com");
             sink.link_();
             sink.link("./index.html#anchor");
@@ -65,10 +63,6 @@ public class Xhtml5SinkTest extends AbstractSinkTest {
             sink.link_();
             sink.link("index.html");
             sink.link_();
-        } finally {
-            if (sink != null) {
-                sink.close();
-            }
         }
 
         String actual = writer.toString();
@@ -325,11 +319,9 @@ public class Xhtml5SinkTest extends AbstractSinkTest {
      */
     @Test
     public void testEntities() {
-        Xhtml5Sink sink = null;
         Writer writer = new StringWriter();
 
-        try {
-            sink = new Xhtml5Sink(writer);
+        try (Xhtml5Sink sink = new Xhtml5Sink(writer)) {
             sink.section(Sink.SECTION_LEVEL_1, null);
             sink.header();
             sink.sectionTitle(Sink.SECTION_LEVEL_1, null);
@@ -340,8 +332,6 @@ public class Xhtml5SinkTest extends AbstractSinkTest {
             sink.text("&", null);
             sink.paragraph_();
             sink.section_(Sink.SECTION_LEVEL_1);
-        } finally {
-            sink.close();
         }
 
         assertEquals("<section><header>\n<h1>&amp;</h1></header>\n<p>&amp;</p></section>", writer.toString());
@@ -352,11 +342,9 @@ public class Xhtml5SinkTest extends AbstractSinkTest {
      */
     @Test
     public void testHead() {
-        Xhtml5Sink sink = null;
         Writer writer = new StringWriter();
 
-        try {
-            sink = new Xhtml5Sink(writer);
+        try (Xhtml5Sink sink = new Xhtml5Sink(writer)) {
             sink.head();
             sink.title();
             sink.text("Title");
@@ -370,8 +358,6 @@ public class Xhtml5SinkTest extends AbstractSinkTest {
             atts.addAttribute("href", "http://maven.apache.org/");
             sink.unknown("base", new Object[] {HtmlMarkup.TAG_TYPE_SIMPLE}, atts);
             sink.head_();
-        } finally {
-            sink.close();
         }
 
         String expected =

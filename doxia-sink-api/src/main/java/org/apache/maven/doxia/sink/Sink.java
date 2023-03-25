@@ -18,8 +18,6 @@
  */
 package org.apache.maven.doxia.sink;
 
-import java.io.AutoCloseable;
-
 /**
  * A <i>Sink</i> consumes Doxia events to produce a resultant output format
  * (eg Docbook, PDF, XHTML...).
@@ -54,7 +52,7 @@ import java.io.AutoCloseable;
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @author ltheussl
  */
-public interface Sink implements AutoCloseable {
+public interface Sink extends AutoCloseable {
 
     /**
      * A numbering to handle a number list.

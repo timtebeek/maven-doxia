@@ -104,12 +104,9 @@ public abstract class AbstractSinkTest extends AbstractModuleTest {
     @Test
     public final void testTestDocument() throws IOException {
         Writer writer = (isXmlSink() ? getXmlTestWriter("testDocument") : getTestWriter("testDocument"));
-        Sink testSink = createSink(writer);
-
-        try {
+        try (Sink testSink = createSink(writer)) {
             SinkTestDocument.generate(testSink);
         } finally {
-            testSink.close();
             IOUtils.closeQuietly(writer);
         }
     }

@@ -330,17 +330,11 @@ public class XdocSinkTest extends AbstractSinkTest {
     @Test
     public void testVerbatimSource() {
         Writer writer = new StringWriter();
-        XdocSink sink = null;
-
-        try {
-            sink = new XdocSink(writer);
-
+        try (XdocSink sink = new XdocSink(writer)) {
             sink.verbatim(null);
             sink.verbatim_();
             sink.verbatim(SinkEventAttributeSet.SOURCE);
             sink.verbatim_();
-        } finally {
-            sink.close();
         }
 
         assertEquals("<pre></pre><source></source>", writer.toString());
@@ -352,19 +346,13 @@ public class XdocSinkTest extends AbstractSinkTest {
     @Test
     public void testLinkWithTarget() {
         Writer writer = new StringWriter();
-        XdocSink sink = null;
-
-        try {
-            sink = new XdocSink(writer);
-
+        try (XdocSink sink = new XdocSink(writer)) {
             sink.link("name");
             sink.link_();
             SinkEventAttributes attrs = new SinkEventAttributeSet();
             attrs.addAttribute(Attribute.TARGET, "nirvana");
             sink.link("name", attrs);
             sink.link_();
-        } finally {
-            sink.close();
         }
 
         assertEquals("<a href=\"name\"></a><a target=\"nirvana\" href=\"name\"></a>", writer.toString());
